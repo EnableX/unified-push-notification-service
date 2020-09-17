@@ -2,94 +2,95 @@
 <html lang="en">
 
 <head>
-	<title>Sample App: Make and receive video call using EnableX Video Service</title>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css"
-		integrity="sha256-aAr2Zpq8MZ+YA/D6JtRD3xtrwpEz2IqOS+pWD/7XKIw=" crossorigin="anonymous" />
+  <title>Sample App: Make and receive video call using EnableX Video Service</title>
+  <link rel="shortcut icon" type="image/ico" href="img/favicon.ico" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha256-aAr2Zpq8MZ+YA/D6JtRD3xtrwpEz2IqOS+pWD/7XKIw=" crossorigin="anonymous" />
 </head>
 
 <body>
-	<div class="container">
-		<h1>Welcome</h1>
-		<p>You have successfully subscribed for push notification.</p>
-		<h1 class="text-center">User List</h1>
-		<p class="text-center">Click to initiate the call to user </p>
-		<div class="row">
-			<div class="col border">User</div>
-			<div class="col border">Platform</div>
-			<div class="col border">Action</div>
-		</div>
-		<div id="users">
-		</div>
-	</div>
-	<script>
+  <div class="container">
+    <h1>Welcome</h1>
+    <p>You have successfully subscribed for push notification.</p>
+    <h1 class="text-center">User List</h1>
+    <p class="text-center">Click to initiate the call to user </p>
+    <div class="row">
+      <div class="col border">User</div>
+      <div class="col border">Platform</div>
+      <div class="col border">Action</div>
+    </div>
+    <div id="users">
+    </div>
+  </div>
+  <script>
 
-		// user initiate a call
-		function makeCall(userIdentity) {
-			var retData = {
-				user_identity: userIdentity,
-			};
+    // user initiate a call
+    function makeCall(userIdentity) {
+      var retData = {
+        user_identity: userIdentity,
+      };
 
-			const xmlHttp = new XMLHttpRequest();
-			xmlHttp.open('POST', `/call`);
-			xmlHttp.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-			xmlHttp.onreadystatechange = function () {
-				if (xmlHttp.readyState !== 4) return;
-				if (xmlHttp.status !== 200 && xmlHttp.status !== 304) {
-					console.log(`HTTP error ${xmlHttp.status}`, null);
-				} else if (this.readyState === 4 && this.status === 200) {
-					const response = JSON.parse(this.responseText);
-					console.log(response);
-					console.log('Push notification sent to user');
-					window.open(`{ENABLX_VIDEO_WEBAPP}/confo.html?token=${response.token}`, '_blank');
-				}
-			};
-			xmlHttp.send(JSON.stringify(retData));
-		}
+      const xmlHttp = new XMLHttpRequest();
+      xmlHttp.open('POST', `/call`);
+      xmlHttp.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+      xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState !== 4) return;
+        if (xmlHttp.status !== 200 && xmlHttp.status !== 304) {
+          console.log(`HTTP error ${xmlHttp.status}`, null);
+        } else if (this.readyState === 4 && this.status === 200) {
+          const response = JSON.parse(this.responseText);
+          console.log(response);
+          console.log('Push notification sent to user');
+          window.open(`{ENABLX_VIDEO_WEBAPP}/confo.html?token=${response.token}`, '_blank');
+        }
+      };
+      xmlHttp.send(JSON.stringify(retData));
+    }
 
-		const userList = document.getElementById('users');
+    const userList = document.getElementById('users');
 
-		// Render html for a user
-		function renderUser(user) {
-			return `
+    // Render html for a user
+    function renderUser(user) {
+      return `
 				<div class="row">
 				<div class="col border">${user.user_identity}</div>
 				<div class="col border">${user.platform}</div>
 				<div class="col border"><button onClick="makeCall('${user.user_identity}')">Call</button></div>
 				</div>`;
-		}
+    }
 
-		// Render html for all the available user
-		function renderUsers(users) {
-			console.log(users);
-			userList.innerHTML = `
+    // Render html for all the available user
+    function renderUsers(users) {
+      console.log(users);
+      userList.innerHTML = `
 				${users.map((user) => renderUser(user)).join('')}
 			`;
-		}
+    }
 
-		let getJSON = (url, callback) => {
-			let xhr = new XMLHttpRequest();
-			xhr.open('GET', url, true);
-			xhr.responseType = 'json';
-			xhr.onload = () => {
-				let status = xhr.status;
-				if (status == 200) {
-					callback(null, xhr.response);
-				} else {
-					callback(status);
-				}
-			};
-			xhr.send();
-		};
+    let getJSON = (url, callback) => {
+      let xhr = new XMLHttpRequest();
+      xhr.open('GET', url, true);
+      xhr.responseType = 'json';
+      xhr.onload = () => {
+        let status = xhr.status;
+        if (status == 200) {
+          callback(null, xhr.response);
+        } else {
+          callback(status);
+        }
+      };
+      xhr.send();
+    };
 
-		getJSON('/device', (err, data) => {
-			if (err != null) {
-				console.error(err);
-			} else {
-				renderUsers(data.result);
-			}
-		});
+    getJSON('/device', (err, data) => {
+      if (err != null) {
+        console.error(err);
+      } else {
+        renderUsers(data.result);
+      }
+    });
 
-	</script>
+  </script>
 </body>
 
 </html>

@@ -36,8 +36,8 @@ vcxroom.createRoom = function createRoom(callback) {
       scheduled: false,
       adhoc: false,
       participants: '4',
-			quality: 'SD',
-			auto_recording: false
+      quality: 'SD',
+      auto_recording: false
     }
   };
 

@@ -11,9 +11,9 @@ exports.sendToDevice = (
       click_action: `${process.env.ENABLX_VIDEO_WEBAPP}/confo.html?token=${moderatorToken}`,
       icon: 'img/enablex-logo.png',
     },
-	});
+  });
 
-	console.log(data);
+  console.log(data);
 
   const options = {
     hostname: 'fcm.googleapis.com',

@@ -2,88 +2,89 @@
 <html lang="en">
 
 <head>
-	<title>Sample App: Make and receive video call using EnableX Video Service</title>
+  <title>Sample App: Make and receive video call using EnableX Video Service</title>
+  <link rel="shortcut icon" type="image/ico" href="img/favicon.ico" />
 </head>
 
 <body>
-	<h1>Register</h1>
-	<p>Register to allow push notification to make and receive EnableX video call.</p>
-	<form id="register_form">
-		<input type="text" id="email" name="email" placeholder="Email" required>
-		<input type="submit" value="Register" id="joinRoom">
-	</form>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
-		integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-	<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-messaging.js"></script>
-	<script>
+  <h1>Register</h1>
+  <p>Register to allow push notification to make and receive EnableX video call.</p>
+  <form id="register_form">
+    <input type="text" id="email" name="email" placeholder="Email" required>
+    <input type="submit" value="Register" id="joinRoom">
+  </form>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-messaging.js"></script>
+  <script>
 
-		// Initialize the Firebase app in the service worker by passing in
-		// your app's Firebase config object.
-		// https://firebase.google.com/docs/web/setup#config-object
-		firebase.initializeApp({FIREBASE_CONFIG_OBJECT});
-		// Retrieve an instance of Firebase Messaging so that it can handle background messages.
-		const messaging = firebase.messaging();
+    // Initialize the Firebase app in the service worker by passing in
+    // your app's Firebase config object.
+    // https://firebase.google.com/docs/web/setup#config-object
+    firebase.initializeApp({FIREBASE_CONFIG_OBJECT});
+    // Retrieve an instance of Firebase Messaging so that it can handle background messages.
+    const messaging = firebase.messaging();
 
-		document.getElementById('register_form').addEventListener('submit', (event) => {
-			event.preventDefault();
+    document.getElementById('register_form').addEventListener('submit', (event) => {
+      event.preventDefault();
 
-			messaging
-				.requestPermission()
-				.then(function () {
-					console.log("Got notification permission");
-					// Get Instance ID token. Initially this makes a network call, once retrieved
-					// subsequent calls to getToken will return from cache.
-					return messaging.getToken();
-				})
-				.then(function (deviceToken) {
-					// call API to save push notification token along with user provided email
-					var retData = {
-						user_identity: document.getElementById('email').value,
-						device_token: deviceToken,
-						platform: 'web'
-					};
+      messaging
+        .requestPermission()
+        .then(function () {
+          console.log("Got notification permission");
+          // Get Instance ID token. Initially this makes a network call, once retrieved
+          // subsequent calls to getToken will return from cache.
+          return messaging.getToken();
+        })
+        .then(function (deviceToken) {
+          // call API to save push notification token along with user provided email
+          var retData = {
+            user_identity: document.getElementById('email').value,
+            device_token: deviceToken,
+            platform: 'web'
+          };
 
-					const xmlHttp = new XMLHttpRequest();
-					xmlHttp.open('POST', '/device');
-					xmlHttp.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-					xmlHttp.onreadystatechange = function () {
-						if (xmlHttp.readyState !== 4) return;
-						if (xmlHttp.status !== 200 && xmlHttp.status !== 304) {
-							console.log(`HTTP error ${xmlHttp.status}`, null);
-						} else if (this.readyState === 4 && this.status === 200) {
-							const response = JSON.parse(this.responseText);
-							console.log(response);
-							console.log('User subscribed to server');
-							window.location.href = "/users.html";
-						}
-					};
-					xmlHttp.send(JSON.stringify(retData));
-				})
-				.catch(function (err) {
-					console.log("Didn't get notification permission", err);
-				});
-		});
+          const xmlHttp = new XMLHttpRequest();
+          xmlHttp.open('POST', '/device');
+          xmlHttp.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+          xmlHttp.onreadystatechange = function () {
+            if (xmlHttp.readyState !== 4) return;
+            if (xmlHttp.status !== 200 && xmlHttp.status !== 304) {
+              console.log(`HTTP error ${xmlHttp.status}`, null);
+            } else if (this.readyState === 4 && this.status === 200) {
+              const response = JSON.parse(this.responseText);
+              console.log(response);
+              console.log('User subscribed to server');
+              window.location.href = "/users.html";
+            }
+          };
+          xmlHttp.send(JSON.stringify(retData));
+        })
+        .catch(function (err) {
+          console.log("Didn't get notification permission", err);
+        });
+    });
 
-		// Handle incoming messages. Called when:
-		// - a message is received while the app has focus
-		// - the user clicks on an app notification created by a service worker
-		//   `messaging.setBackgroundMessageHandler` handler.
-		messaging.onMessage(function (payload) {
-			console.log("Message received. ", JSON.stringify(payload));
-		});
+    // Handle incoming messages. Called when:
+    // - a message is received while the app has focus
+    // - the user clicks on an app notification created by a service worker
+    //   `messaging.setBackgroundMessageHandler` handler.
+    messaging.onMessage(function (payload) {
+      console.log("Message received. ", JSON.stringify(payload));
+    });
 
-		// Callback fired if Instance ID token is updated.
-		messaging.onTokenRefresh(function () {
-			messaging.getToken()
-				.then(function (refreshedToken) {
-					console.log('Token refreshed.');
-				}).catch(function (err) {
-					console.log('Unable to retrieve refreshed token ', err);
-				});
-		});
+    // Callback fired if Instance ID token is updated.
+    messaging.onTokenRefresh(function () {
+      messaging.getToken()
+        .then(function (refreshedToken) {
+          console.log('Token refreshed.');
+        }).catch(function (err) {
+          console.log('Unable to retrieve refreshed token ', err);
+        });
+    });
 
-	</script>
+  </script>
 </body>
 
 </html>
