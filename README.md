@@ -1,6 +1,6 @@
-# EnableX real time video communication with web push notification
+# EnableX real time video communication using Firebase Cloud Messaging for Web
 
-This project will give enable you to do EnableX real time video communication with web push notification
+This project will enable you to do EnableX real time video communication using Firebase Cloud Messaging for Web
 
 ---
 ## Requirements
@@ -26,34 +26,74 @@ Also, be sure to have `git` available in your PATH, `npm` might need it (You can
 If the installation was successful, you should be able to run the following command.
 
     $ node --version
-    v8.11.3
+    v12.17.0
 
     $ npm --version
-    6.1.0
-
-If you need to update `npm`, you can make it using `npm`! Cool right? After running the following command, just open again the command line and be happy.
-
-    $ npm install npm -g
+    6.14.4
 
 ---
 
-## Install
+## Prerequisite
 
-    $ git clone https://github.com/YOUR_USERNAME/PROJECT_TITLE
-    $ cd PROJECT_TITLE
-    $ npm install
+### Setup EnableX video calling application
+
+      $ npm install -g http-server
+      $ git clone https://github.com/EnableX/One-to-One-Video-Sample-Web-Application
+      $ cd One-to-One-Video-Sample-Web-Application
+
+### TLS/SSL
+- First, you need to make sure that openssl is installed correctly, and you have `key.pem` and `cert.pem` files. You can generate them using this command:
+
+      $ openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem
+
+- This generates a cert-key pair. Then you need to run the server with -S for enabling SSL and -C for your certificate file.
+
+      $ http-server -S -C cert.pem
+
+## Install
+- Switch out of the `One-to-One-Video-Sample-Web-Application` directory -
+
+      $ cd ..
+
+- Setup this project -
+
+      $ git clone https://github.com/EnableX/unified-push-notification-service.git
+      $ cd unified-push-notification-service
+      $ npm install
 
 ## Configure app
 
-Copy `example.env` as `.env` and then edit it with your settings. You will need:
+Copy `example.env` as `.env` and then edit it with your settings.
 
-- Create an `EnableX` Free Trial account on https://portal.enablex.io/ and create a project to get your APP ID & APP Key & update in .env file or set env variable as followed
-	$ export ENABLEX_APP_ID=
-	$ export ENABLEX_APP_KEY=
-- Create a `Firebase` project on https://console.firebase.google.com/ and go to your Dashboard, Click on the “gear” icon and access “project settings”. Find `Server Key`
-	$ export FIREBASE_SERVER_KEY=
-- Mongo database connection string
-- Git clone https://github.com/EnableX/One-to-One-Video-Sample-Web-Application and run it as independent service on https using https://www.npmjs.com/package/http-server or any other tool and set to ENABLX_VIDEO_WEBAPP in `.env`
+- Create an `EnableX` Free Trial account on https://portal.enablex.io/
+- Create a project to get your `APP ID` & `APP Key` & update `ENABLEX_APP_ID` & `ENABLEX_APP_KEY`
+- Alternatively, You can set env variable as followed -
+
+      $ export ENABLEX_APP_ID=
+      $ export ENABLEX_APP_KEY=
+
+- Create a `Firebase` project on https://console.firebase.google.com/ > Go to your Dashboard > Click on the “gear” icon and access “project settings”.
+- Find `Server Key` and update `FIREBASE_SERVER_KEY`.
+- Alternatively, you can also set env variable as followed -
+
+      $ export FIREBASE_SERVER_KEY=
+
+- Either set mongo database connection string as `MONGO_CONN_STRING` -
+
+      $ export MONGO_CONN_STRING=
+
+- OR set your mongo database connection string as `MONGO_HOST`, `MONGO_PORT`, `MONGO_DB`, `MONGO_USER` & `MONGO_PASSWORD` -
+
+      $ export MONGO_HOST=
+      $ export MONGO_PORT=
+      $ export MONGO_DB=
+      $ export MONGO_USER=
+      $ export MONGO_PASSWORD=
+
+- Set your EnableX video calling application URL, generated after running `http-server -S -C cert.pem` -
+
+      $ export ENABLX_VIDEO_WEBAPP=
+
 
 ## Running the project
 
