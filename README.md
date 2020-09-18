@@ -61,7 +61,7 @@ If the installation was successful, you should be able to run the following comm
       $ cd unified-push-notification-service
       $ npm install
 
-## Configure app
+## Configure app (Backend)
 
 Copy `example.env` as `.env` and then edit it with your settings.
 
@@ -71,12 +71,6 @@ Copy `example.env` as `.env` and then edit it with your settings.
 
       $ export ENABLEX_APP_ID=
       $ export ENABLEX_APP_KEY=
-
-- Create a `Firebase` project on https://console.firebase.google.com/ > Go to your Dashboard > Click on the “gear” icon and access “project settings”.
-- Find `Server Key` and update `FIREBASE_SERVER_KEY`.
-- Alternatively, you can also set env variable as followed -
-
-      $ export FIREBASE_SERVER_KEY=
 
 - Either set mongo database connection string as `MONGO_CONN_STRING` -
 
@@ -93,6 +87,21 @@ Copy `example.env` as `.env` and then edit it with your settings.
 - Set your EnableX video calling application URL, generated after running `http-server -S -C cert.pem` -
 
       $ export ENABLX_VIDEO_WEBAPP=
+
+- Open `public`/`users.html` file and set the same value of `ENABLX_VIDEO_WEBAPP`
+
+- Create a `Firebase` project on https://console.firebase.google.com/ > Go to your Dashboard > Click on the “gear” icon and access “project settings”.
+- Find `Server Key` and update `FIREBASE_SERVER_KEY`.
+- Alternatively, you can also set env variable as followed -
+
+      $ export FIREBASE_SERVER_KEY=
+
+## Configure app (Frontend)
+
+Update following files to Initialise the Firebase app in the service worker by passing in your app's Firebase config object `FIREBASE_CONFIG_OBJECT`. You can find it on https://console.firebase.google.com/ > go to your Dashboard, Click on the “gear” icon and access `Project settings` > `General` > `Your apps` > `Firebase SDK snippet` > `firebaseConfig`.
+
+- Open `public`/`index.html` file and set the value of `FIREBASE_CONFIG_OBJECT`
+- Open `public`/`firebase-messaging-sw.js` file and set the value `FIREBASE_CONFIG_OBJECT`
 
 
 ## Running the project
