@@ -1,5 +1,7 @@
 const https = require('https');
 
+// To send messages to specific devices using FCM for web
+// Ref - https://firebase.google.com/docs/cloud-messaging/send-message#http_post_request
 exports.sendToDevice = (
   deviceToken, moderatorToken,
 ) => {
@@ -7,7 +9,7 @@ exports.sendToDevice = (
     to: deviceToken,
     notification: {
       title: 'Video Call from EnableX',
-      body: `Video Call from EnableX`,
+      body: 'Video Call from EnableX',
       click_action: `${process.env.ENABLX_VIDEO_WEBAPP}/confo.html?token=${moderatorToken}`,
       icon: 'img/enablex-logo.png',
     },

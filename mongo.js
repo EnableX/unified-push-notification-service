@@ -29,7 +29,9 @@ MongoClient
 exports.saveDevice = (
   userIdentity, deviceToken, devicePlatform,
 ) => new Promise((resolve, reject) => {
-  const deviceObject = { user_identity: userIdentity, device_token: deviceToken, platform: devicePlatform };
+  const deviceObject = {
+    user_identity: userIdentity, device_token: deviceToken, platform: devicePlatform,
+  };
   database
     .collection('devices')
     .insertOne(deviceObject, (err, result) => (err ? reject(err) : resolve(result)));

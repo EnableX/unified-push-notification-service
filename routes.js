@@ -146,7 +146,7 @@ router.post('/call', (req, res) => {
         res.status(404);
         res.send({
           message: `Record not found for the given identity ${req.body.user_identity}`,
-          error: 'record not found'
+          error: 'record not found',
         });
       }
     });

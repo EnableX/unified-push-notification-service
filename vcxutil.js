@@ -4,7 +4,7 @@ require('dotenv').config();
 
 const vcxutil = {};
 
-// Function: To create basic authentication header using APP ID and APP KEY
+// Function: To create basic authentication header using EnableX APP ID and APP KEY
 vcxutil.getBasicAuthToken = function getBasicAuthToken() {
   return btoa(`${process.env.ENABLEX_APP_ID}:${process.env.ENABLEX_APP_KEY}`);
 };

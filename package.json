@@ -1,7 +1,7 @@
 {
   "name": "unified-push-notification-service",
   "version": "1.0.0",
-  "description": "",
+  "description": "EnableX real time video communication using Firebase Cloud Messaging for Web",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
@@ -24,5 +24,10 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mongodb": "^3.6.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.9.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0"
   }
 }
