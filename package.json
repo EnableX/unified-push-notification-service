@@ -4,9 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-	},
-  "keywords": ["EnableX", "Video", "Push", "Notification", "Firebase", "FCM", "firebase cloud messaging for javascript", "WebRTC"],
+    "start": "node index.js"
+  },
+  "keywords": [
+    "EnableX",
+    "Video",
+    "Push",
+    "Notification",
+    "Firebase",
+    "FCM",
+    "firebase cloud messaging for javascript",
+    "WebRTC"
+  ],
   "author": "Rajesh Goyal <rajesh.g@vcloudx.com> (https://enablex.io)",
   "license": "ISC",
   "dependencies": {
