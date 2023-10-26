@@ -1,6 +1,6 @@
-# EnableX real time video communication using Firebase Cloud Messaging for Web
+# Real-Time Video Communication with EnableX and Firebase Cloud Messaging for Web
 
-This project will enable you to do EnableX real time video communication using Firebase Cloud Messaging for Web
+Dive into this sample app to experience how EnableX real-time video communication is enhanced with Firebase Cloud Messaging for Web. Designed for those curious about merging video chat functionalities with the power of push notifications, this app offers a firsthand look at the integration possibilities.                       This project harnesses the power of EnableX and integrates it seamlessly with Firebase Cloud Messaging for Web. Dive in to explore how two cutting-edge technologies come together to revolutionize video chats
 
 ---
 ## Requirements
