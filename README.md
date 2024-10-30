@@ -65,7 +65,7 @@ If the installation was successful, you should be able to run the following comm
 
 Copy `example.env` as `.env` and then edit it with your settings.
 
-- Create an `EnableX` Free Trial account on https://portal.enablex.io/cpaas/trial-sign-up/
+- Create an `EnableX` Free Trial account on https://www.enablex.io/free-trial/
 - Create a project to get your `APP ID` & `APP Key` & update `ENABLEX_APP_ID` & `ENABLEX_APP_KEY`
 - Alternatively, You can set env variable as followed -
 
